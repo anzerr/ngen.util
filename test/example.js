@@ -1,58 +1,40 @@
 
 const Gen = require('../index.js'),
 	Map = require('image.util'),
+	{hsv} = require('color.util'),
 	bmp = require('bmp.util'),
 	fs = require('fs.promisify');
 
-const hsv2rgb = (h, s, v) => {
-	let c = v * s;
-	let h1 = h / 60;
-	let x = c * (1 - Math.abs((h1 % 2) - 1));
-	let m = v - c;
-	let rgb = [];
-
-	if (typeof h == 'undefined') {
-		rgb = [0, 0, 0];
-	} else if (h1 < 1) {
-		rgb = [c, x, 0];
-	} else if (h1 < 2) {
-		rgb = [x, c, 0];
-	} else if (h1 < 3) {
-		rgb = [0, c, x];
-	} else if (h1 < 4) {
-		rgb = [0, x, c];
-	} else if (h1 < 5) {
-		rgb = [x, 0, c];
-	} else if (h1 <= 6) {
-		rgb = [c, 0, x];
-	}
-
-	let r = 255 * (rgb[0] + m);
-	let g = 255 * (rgb[1] + m);
-	let b = 255 * (rgb[2] + m);
-
-	return {r: r, g: g, b: b};
-};
-
-const scale = 1e4;
+const scale = 1e9;
+const max = 2e3;
 const map = new Map({
-	width: 1000,
-	height: 1000,
+	width: max,
+	height: max,
 	mask: {r: 3, g: 2, b: 1, a: 0}
 });
+const color = (i) => {
+	let c = hsv(i, 1, 0.5).toRgb();
+	return {r: c[0], g: c[1], b: c[2]};
+};
+
 console.log('fill');
-// map.fill(0, 0, {r: 255, g: 255, b: 255}, map.height, map.width);
 console.log('start');
 const g = new Gen('8PILspWVIRmYYmxjDX3G');
+const step = Math.floor(scale * 0.1);
 for (let i = 0; i < scale; i++) {
-	// let n = g.get('8gNz9DrywX:' + i);
-	let n = Math.random();
-	map.fill(
-		Math.round(n * 1000),
-		i % 1000,
-		hsv2rgb(Math.floor((i / scale) * 360), 1, 0.5),
-		2
-	);
+	let n1 = g.get('8gNz9DrywX:' + i);
+	let n = Math.round(n1 * map.width * map.height);
+	let x = n % map.width, y = Math.floor(n / (map.width + 1));
+	try {
+		let c = color(i / scale), c1 = map.data[y][x];
+		map.set(y, x, {r: c.r ^ c1.r, g: c.g ^ c1.g, b: c.b ^ c1.b});
+		if (i % step === 0) {
+			console.log('step', i, scale);
+		}
+	} catch (e) {
+		console.log(x, y);
+		throw e;
+	}
 }
 
 fs.writeFile('data.bmp', bmp.encode({

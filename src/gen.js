@@ -1,16 +1,29 @@
 
 const crypto = require('crypto');
 
+const NUM = {
+	0: true,
+	1: true,
+	2: true,
+	3: true,
+	4: true,
+	5: true,
+	6: true,
+	7: true,
+	8: true,
+	9: true
+};
+
 class Gen {
 
 	constructor(key, range) {
 		this.range = range || 128;
 		this.key = key;
-		this.cap = this.createMax(Math.floor(this.range / 2) + 1);
+		this.cap = this.createMax(Math.floor(this.range / 2));
 	}
 
 	createMax(n) {
-		return Number('1' + Array(n).join('0'));
+		return Math.pow(10, n);
 	}
 
 	charToInt(n) {
@@ -18,13 +31,14 @@ class Gen {
 	}
 
 	hexToInt(hex) {
-		let a = [];
+		let a = 0, p = 1;
 		for (let i in hex) {
-			if (hex[i].match(/\d/)) {
-				a.push(hex[i]);
+			if (NUM[hex[i]]) {
+				a += Number(hex[i]) * p;
+				p = p * 10;
 			}
 		}
-		return Number(a.join(''));
+		return a;
 	}
 
 	get(seed) {
