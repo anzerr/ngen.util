@@ -11,11 +11,11 @@
 	"license": "ISC",
 	"devDependencies": {
 		"eslint": "^5.11.1",
-		"eslint-config-basic": "git+http://git@github.com/anzerr/eslintrc.git",
-		"bmp.util": "git+http://git@github.com/anzerr/bmp.util.git",
-		"image.util": "git+http://git@github.com/anzerr/image.util.git",
-		"fs.promisify": "git+http://git@github.com/anzerr/fs.promisify.git",
-		"color.util": "git+http://git@github.com/anzerr/color.util.git"
+		"eslint-config-basic": "git+https://git@github.com/anzerr/eslintrc.git",
+		"bmp.util": "git+https://git@github.com/anzerr/bmp.util.git",
+		"image.util": "git+https://git@github.com/anzerr/image.util.git",
+		"fs.promisify": "git+https://git@github.com/anzerr/fs.promisify.git",
+		"color.util": "git+https://git@github.com/anzerr/color.util.git"
 	},
 	"eslintConfig": {
 		"extends": "eslint-config-basic"
