@@ -1,14 +1,15 @@
 {
 	"name": "ngen.util",
 	"version": "1.0.0",
-	"description": "",
+	"keywords": [],
+	"license": "ISC",
 	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
-	"keywords": [],
-	"author": "",
-	"license": "ISC",
+	"eslintConfig": {
+		"extends": "eslint-config-basic"
+	},
 	"devDependencies": {
 		"eslint": "^5.11.1",
 		"eslint-config-basic": "git+https://git@github.com/anzerr/eslintrc.git",
@@ -16,8 +17,5 @@
 		"image.util": "git+https://git@github.com/anzerr/image.util.git",
 		"fs.promisify": "git+https://git@github.com/anzerr/fs.promisify.git",
 		"color.util": "git+https://git@github.com/anzerr/color.util.git"
-	},
-	"eslintConfig": {
-		"extends": "eslint-config-basic"
 	}
 }
