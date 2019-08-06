@@ -21,7 +21,6 @@
 		"extends": "eslint-config-basic"
 	},
 	"devDependencies": {
-		"eslint": "5.11.1",
 		"eslint-config-basic": "git+https://git@github.com/anzerr/eslintrc.git",
 		"bmp.util": "git+https://git@github.com/anzerr/bmp.util.git",
 		"image.util": "git+https://git@github.com/anzerr/image.util.git",

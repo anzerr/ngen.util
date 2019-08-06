@@ -1,9 +1,15 @@
 
 ### `Intro`
-POC into generating numbers with a secret that you can release later
+Generating numbers with a secret that you can release later
+
+<div style="text-align:center"><img src="https://raw.githubusercontent.com/anzerr/ngen.util/master/test/data_rand.bmp" /></div>
+
+#### `Install`
+``` bash
+npm install --save git+https://github.com/anzerr/ngen.util.git
+```
 
 ### `Example`
-
 ``` javascript
 const Gen = require('ngen.util');
 
