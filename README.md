@@ -7,6 +7,7 @@ Generating numbers with a secret that you can release later
 #### `Install`
 ``` bash
 npm install --save git+https://github.com/anzerr/ngen.util.git
+npm install --save @anzerr/ngen.util
 ```
 
 ### `Example`
