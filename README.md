@@ -1,5 +1,7 @@
 
 ### `Intro`
+![GitHub Actions status | publish](https://github.com/anzerr/ngen.util/workflows/publish/badge.svg)
+
 Generating numbers with a secret that you can release later
 
 <div style="text-align:center"><img src="https://raw.githubusercontent.com/anzerr/ngen.util/master/test/data_rand.bmp" /></div>

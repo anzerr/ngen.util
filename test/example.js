@@ -5,8 +5,8 @@ const Gen = require('../index.js'),
 	bmp = require('bmp.util'),
 	fs = require('fs.promisify');
 
-const scale = 1e9;
-const max = 2e3;
+const scale = 1e6;
+const max = 1e3;
 const map = new Map({
 	width: max,
 	height: max,
@@ -20,20 +20,26 @@ const color = (i) => {
 console.log('fill');
 console.log('start');
 const g = new Gen('8PILspWVIRmYYmxjDX3G');
+for (let i = 0; i < 6; i++) {
+	let n1 = g.get('8gNz9DrywX:' + i);
+	console.log(i, n1);
+}
 const step = Math.floor(scale * 0.1);
 for (let i = 0; i < scale; i++) {
 	let n1 = g.get('8gNz9DrywX:' + i);
-	let n = Math.round(n1 * map.width * map.height);
-	let x = n % map.width, y = Math.floor(n / (map.width + 1));
-	try {
-		let c = color(i / scale), c1 = map.data[y][x];
-		map.set(y, x, {r: c.r ^ c1.r, g: c.g ^ c1.g, b: c.b ^ c1.b});
-		if (i % step === 0) {
-			console.log('step', i, scale);
+	for (let v in n1) {
+		let n = Math.round(n1[v] * map.width * map.height);
+		let x = n % map.width, y = Math.floor(n / (map.width + 1));
+		try {
+			let c = color(i / scale), c1 = map.data[y][x];
+			map.set(y, x, {r: c.r ^ c1.r, g: c.g ^ c1.g, b: c.b ^ c1.b});
+		} catch (e) {
+			console.log(x, y);
+			throw e;
 		}
-	} catch (e) {
-		console.log(x, y);
-		throw e;
+	}
+	if (i % step === 0) {
+		console.log('step', i, scale);
 	}
 }
 

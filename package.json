@@ -1,7 +1,14 @@
 {
 	"name": "ngen.util",
 	"version": "1.0.5",
-	"keywords": [],
+	"description": "Hmac number generator",
+	"keywords": [
+		"generator",
+		"javascript",
+		"nodejs",
+		"number",
+		"util"
+	],
 	"homepage": "https://github.com/anzerr/ngen.util#readme",
 	"bugs": {
 		"url": "https://github.com/anzerr/ngen.util/issues"
@@ -15,7 +22,8 @@
 	"main": "index.js",
 	"types": "index.d.ts",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"example": "node --max-old-space-size=8192 test/example.js",
+		"test": "node test/test.js"
 	},
 	"eslintConfig": {
 		"extends": "eslint-config-basic"

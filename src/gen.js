@@ -1,52 +1,41 @@
 
 const crypto = require('crypto');
 
-const NUM = {
-	0: true,
-	1: true,
-	2: true,
-	3: true,
-	4: true,
-	5: true,
-	6: true,
-	7: true,
-	8: true,
-	9: true
-};
-
 class Gen {
 
-	constructor(key, range) {
-		this.range = range || 128;
+	constructor(key) {
 		this.key = key;
-		this.cap = this.createMax(Math.floor(this.range / 2));
 	}
 
-	createMax(n) {
-		return Math.pow(10, n);
-	}
-
-	charToInt(n) {
-		return Math.round(9 * ((n.charCodeAt(0) - 97) / 25));
-	}
-
-	hexToInt(hex) {
-		let a = 0, p = 1;
-		for (let i in hex) {
-			if (NUM[hex[i]]) {
-				a += Number(hex[i]) * p;
-				p = p * 10;
+	getRoll(seed) {
+		let hmac = crypto.createHmac('sha512', this.key);
+		hmac.update(seed);
+		const hash = hmac.digest('hex');
+		let roll = null, block = 0, blockSize = 5;
+		while (roll === null) {
+			if (block === 25) {
+				roll = parseInt(hash.substring(125, 128), 16) / 1000000;
+			} else {
+				let b = parseInt(hash.substring(block * blockSize, (block + 1) * blockSize), 16);
+				if (b < 1000000) {
+					roll = b / 1000000;
+				}
+				block++;
 			}
 		}
-		return a;
+		return roll;
 	}
 
 	get(seed) {
-		let hash = crypto.createHmac('sha512', this.key);
-		hash.update(seed);
-		let a = this.hexToInt(hash.digest('hex').substr(0, this.range));
-		let cap = this.createMax(Math.ceil(Math.log10(a)) + 1);
-		return ((a / cap) - 0.1) / 0.9;
+		const hmac = crypto.createHmac('sha512', this.key), out = [];
+		hmac.update(seed);
+		const hash = hmac.digest();
+		let i = 0;
+		while (i <= (hash.length - 4)) {
+			out.push(hash.readUIntBE(i, 4) / 0xffffffff);
+			i += 4;
+		}
+		return out;
 	}
 
 }
